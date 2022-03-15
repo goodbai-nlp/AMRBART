@@ -16,7 +16,7 @@ datacate=AMR17-full
 
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
-export OUTPUT_DIR_NAME=outputs/${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM-5e-5-finetune-lr${lr}-AMREOS-V100
+export OUTPUT_DIR_NAME=outputs/${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM-5e-5-finetune-lr${lr}
 
 export CURRENT_DIR=${ROOT_DIR}
 export OUTPUT_DIR=${CURRENT_DIR}/${OUTPUT_DIR_NAME}

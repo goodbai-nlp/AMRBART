@@ -7,7 +7,7 @@ GPUID=$2
 MODEL=$1
 eval_beam=5
 modelcate=base
-modelcate=large
+#modelcate=large
 
 lr=8e-6
 
@@ -21,7 +21,7 @@ datacate=AMR17-full
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
 
-export OUTPUT_DIR_NAME=outputs/Eval-${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLMTAPT
+export OUTPUT_DIR_NAME=outputs/Eval-${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM
 
 export CURRENT_DIR=${ROOT_DIR}
 export OUTPUT_DIR=${CURRENT_DIR}/${OUTPUT_DIR_NAME}

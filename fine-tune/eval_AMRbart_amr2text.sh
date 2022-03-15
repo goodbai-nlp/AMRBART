@@ -10,8 +10,7 @@ modelcate=base
 
 lr=2e-6
 
-datacate=Giga
-# datacate=AMR17-full
+datacate=AMR17-full
 # datacate=AMR20-full
 # datacate=AMR17-silver
 #datacate=Giga
@@ -21,7 +20,7 @@ datacate=Giga
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
 
-export OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLM-V100
+export OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLM
 
 export CURRENT_DIR=${ROOT_DIR}
 export OUTPUT_DIR=${CURRENT_DIR}/${OUTPUT_DIR_NAME}
