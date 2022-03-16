@@ -20,7 +20,7 @@ We recommend to use conda to manage virtual environments:
 ```
 conda env update --name <env> --file requirements.yml
 ```
-We also provide a docker image [here](todo).
+We also provide a docker image [here](https://hub.docker.com/layers/muyeby/docker-pytorch/cuda11.1py38torch1.8AMRPLM/images/sha256-c8c86f32d5e23787b0b3fbe70014ffeba693b3a5fad50fa31cf3bb664ee3def7?context=explore).
 
 # Data Processing
 
