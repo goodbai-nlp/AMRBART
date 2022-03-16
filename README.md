@@ -22,9 +22,19 @@ conda env update --name <env> --file requirements.txt
 ```
 We also provide a docker image [here](todo).
 
-# Data 
+# Data Processing
+
 <!-- Since AMR corpus require LDC license, we upload some examples for format reference. If you have the license, feel free to contact us for getting the preprocessed data. -->
 You may download the AMR corpora at [LDC](https://www.ldc.upenn.edu).
+
+We follow [Spring](https://github.com/SapienzaNLP/spring) to preprocess AMR graphs:
+```
+# 1. install spring 
+cd spring && pip install -e 
+# 2. processing data
+bash run-preprocess.sh
+```
+
 
 # Pre-training
 ```
