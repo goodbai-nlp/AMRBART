@@ -1,5 +1,5 @@
 # AMRBART
-An implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](tobeadded).
+An implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](https://arxiv.org/pdf/2203.07836.pdf) (Arxiv).
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/graph-pre-training-for-amr-parsing-and-1/amr-to-text-generation-on-ldc2017t10)](https://paperswithcode.com/sota/amr-to-text-generation-on-ldc2017t10?p=graph-pre-training-for-amr-parsing-and-1)
 
@@ -23,7 +23,8 @@ conda env update --name <env> --file requirements.txt
 We also provide a docker image [here](todo).
 
 # Data 
-Since AMR corpus require LDC license, we upload some examples for format reference. If you have the license, feel free to contact us for getting the preprocessed data.
+<!-- Since AMR corpus require LDC license, we upload some examples for format reference. If you have the license, feel free to contact us for getting the preprocessed data. -->
+You may download the AMR corpora at [LDC](https://www.ldc.upenn.edu).
 
 # Pre-training
 ```
