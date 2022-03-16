@@ -18,7 +18,7 @@ An implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Gene
 
 We recommend to use conda to manage virtual environments:
 ```
-conda env update --name <env> --file requirements.txt
+conda env update --name <env> --file requirements.yml
 ```
 We also provide a docker image [here](todo).
 
