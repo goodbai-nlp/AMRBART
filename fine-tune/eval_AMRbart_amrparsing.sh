@@ -7,11 +7,13 @@ GPUID=$2
 MODEL=$1
 eval_beam=5
 modelcate=base
-#modelcate=large
+modelcate=large
 
 lr=8e-6
 
 datacate=AMR17-full
+datacate=AMR2.0
+#datacate=AMR3.0
 #datacate=AMR20-full
 #datacate=AMR17-silver
 #datacate=Giga
@@ -49,7 +51,7 @@ python -u ${ROOT_DIR}/run_amrparsing.py \
     --max_epochs 1 \
     --max_steps -1 \
     --per_gpu_train_batch_size=4 \
-    --per_gpu_eval_batch_size=4 \
+    --per_gpu_eval_batch_size=16 \
     --accumulate_grad_batches 2 \
     --unified_input \
     --early_stopping_patience 10 \
@@ -61,7 +63,7 @@ python -u ${ROOT_DIR}/run_amrparsing.py \
     --tgt_block_size=1024 \
     --eval_max_length=1024 \
     --train_num_workers 8 \
-    --eval_num_workers 4 \
+    --eval_num_workers 1 \
     --process_num_workers 8 \
     --do_eval \
     --seed 42 \

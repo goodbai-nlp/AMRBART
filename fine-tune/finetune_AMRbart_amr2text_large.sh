@@ -10,8 +10,8 @@ modelcate=large
 lr=2e-6         # AMR2.0
 #lr=1e-6        # AMR3.0
 
-datacate=AMR17-full
-#datacate=AMR20-full
+datacate=AMR2.0
+#datacate=AMR3.0
 
 echo "Using lr=${lr}..."
 Tokenizer=../../../data/pretrained-model/bart-$modelcate

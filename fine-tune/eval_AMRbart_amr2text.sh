@@ -5,13 +5,13 @@ ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 GPUID=$2
 MODEL=$1
 eval_beam=5
-modelcate=base
-#modelcate=large
+#modelcate=base
+modelcate=large
 
 lr=2e-6
 
-datacate=AMR17-full
-# datacate=AMR20-full
+datacate=AMR2.0
+datacate=AMR3.0
 # datacate=AMR17-silver
 #datacate=Giga
 # datacate=New3

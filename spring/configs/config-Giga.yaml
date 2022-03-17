@@ -55,7 +55,8 @@ remove_longer_than: 1024
 
 # <------------------
 # Data: replace DATA below with the root of your AMR 2/3 release folder
+# concat individual amr files -> train/dev/test-all.txt
 cate: Giga
-train: data/gigawords-200k/*.txt
-dev: data/LDC2020/amrs/split/dev/*.txt
-test: data/LDC2020/amrs/split/test/*.txt
+train: data/gigawords-200k/train-all.txt
+dev: data/LDC2020/amrs/split/dev/dev-all.txt
+test: data/LDC2020/amrs/split/test/test-all.txt

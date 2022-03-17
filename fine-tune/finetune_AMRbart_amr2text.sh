@@ -9,8 +9,8 @@ modelcate=base
 
 lr=5e-6
 
-datacate=AMR17-full
-#datacate=AMR20-full
+datacate=AMR2.0
+#datacate=AMR3.0
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
 

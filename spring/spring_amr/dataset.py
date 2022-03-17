@@ -1,3 +1,4 @@
+# coding:utf-8
 import logging
 import random
 import torch
@@ -62,10 +63,12 @@ class AMRDataset(Dataset):
         
         print("All {} instances in {}".format(len(self.sentences), paths))
         # json.dump(self.graphs, open(f'{type_path}_graph.json', 'w', encoding='utf-8'), indent=4)
-        json.dump(self.sentences, open(f'../data/{data_cate}/{type_path}_tgt_tokens.json', 'w', encoding='utf-8'), indent=4)
+        #json.dump(self.sentences, open(f'../data/{data_cate}/{type_path}_tgt_tokens.json', 'w', encoding='utf-8'), indent=4)
         # json.dump(self.linearized, open(f'{type_path}_linearized_ids.json', 'w', encoding='utf-8'), indent=4)
-        json.dump(self.linearized_tokens, open(f'../data/{data_cate}/{type_path}_linearized_tokens.json', 'w', encoding='utf-8'), indent=4)
-        # exit()
+        #json.dump(self.linearized_tokens, open(f'../data/{data_cate}/{type_path}_linearized_tokens.json', 'w', encoding='utf-8'), indent=4)
+        res_out = [json.dumps({"src": sent, "tgt": " ".join(lamr)}) for lamr, sent in zip(self.linearized_tokens, self.sentences)]
+        with open(f"../data/{data_cate}/{type_path}.jsonl", 'w', encoding='utf-8') as fout:
+            fout.write('\n'.join(res_out))
 
     def __len__(self):
         return len(self.sentences)
