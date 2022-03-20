@@ -30,7 +30,7 @@ You may download the AMR corpora at [LDC](https://www.ldc.upenn.edu).
 We follow [Spring](https://github.com/SapienzaNLP/spring) to preprocess AMR graphs:
 ```
 # 1. install spring 
-cd spring && pip install -e 
+cd spring && pip install -e .
 # 2. processing data
 bash run-preprocess.sh
 ```
