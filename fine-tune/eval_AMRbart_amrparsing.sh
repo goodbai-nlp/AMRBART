@@ -11,10 +11,8 @@ modelcate=large
 
 lr=8e-6
 
-datacate=AMR17-full
 datacate=AMR2.0
 #datacate=AMR3.0
-#datacate=AMR20-full
 #datacate=AMR17-silver
 #datacate=Giga
 #datacate=New3

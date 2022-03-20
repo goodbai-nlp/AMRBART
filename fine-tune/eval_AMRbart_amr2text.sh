@@ -11,12 +11,12 @@ modelcate=large
 lr=2e-6
 
 datacate=AMR2.0
-datacate=AMR3.0
-# datacate=AMR17-silver
+#datacate=AMR3.0
+#datacate=AMR17-silver
 #datacate=Giga
-# datacate=New3
-# datacate=TLP
-# datacate=Bio
+#datacate=New3
+#datacate=TLP
+#datacate=Bio
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
 
