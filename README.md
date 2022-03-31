@@ -43,38 +43,39 @@ bash run-posttrain-bart-textinf-joint-denoising-6task-large-unified-V100.sh /pat
 
 # Fine-tuning
 
-## AMR Parsing
+For **AMR Parsing**, run
 ```
 bash finetune_AMRbart_amrparsing.sh /path/to/pre-trained/AMRBART/ gpu_id
 ```
 
-## AMR-to-text Generation
+For **AMR-to-text Generation**, run
 ```
 bash finetune_AMRbart_amr2text.sh /path/to/pre-trained/AMRBART/ gpu_id
 ```
 
 
 # Evaluation
-## AMR Parsing
+
+For **AMR Parsing**, run
 ```
 bash eval_AMRbart_amrparsing.sh /path/to/fine-tuned/AMRBART/ gpu_id
 ```
 
-## AMR-to-text Generation
+For **AMR-to-text Generation**, run
 ```
 bash eval_AMRbart_amr2text.sh /path/to/fine-tuned/AMRBART/ gpu_id
 ```
 
 # Inference on your own data
 
-If you want to run our code on your own data, try to transform your data into the format [here](), then run 
+If you want to run our code on your own data, try to transform your data into the format [here](https://github.com/muyeby/AMRBART/tree/main/examples), then run 
 
-## AMR Parsing
+For **AMR Parsing**, run
 ```
 bash inference_amr.sh /path/to/fine-tuned/AMRBART/ gpu_id
 ```
 
-## AMR-to-text Generation
+For **AMR-to-text Generation**, run
 ```
 bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
 ```
