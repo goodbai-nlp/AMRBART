@@ -53,7 +53,7 @@ class AMR2TextModelModule(pl.LightningModule):
                 "You are instantiating a new config instance from scratch. This is not supported, but you can do it from another script, save it,"
                 "and load it from here, using --config_name"
             )
-        self.modify_config(args, config, ("dropout", "attention_dropout"))
+        # self.modify_config(args, config, ("dropout", "attention_dropout"))
         self.tokenizer = tokenizer
         
         if args.model_name_or_path:
@@ -318,31 +318,6 @@ class AMR2TextModelModule(pl.LightningModule):
         os.system("mkdir -p " + os.path.join(self.hparams.output_dir, val_outputs_folder))
 
         if "preds" in outputs[0]:
-            tb_all = {}
-            idx_tb = 0
-            for output_batch in outputs:
-                a, b, c, e = (
-                    output_batch["a"],
-                    output_batch["b"],
-                    output_batch["c"],
-                    output_batch["e"],
-                )
-
-                for aa, bb, ee, cc in zip(a, b, e, c):
-                    tb_all[idx_tb] = {}
-                    tb_all[idx_tb]["input_ids"] = aa
-                    tb_all[idx_tb]["labels"] = bb
-                    tb_all[idx_tb]["decoder_input_ids"] = ee
-                    tb_all[idx_tb]["generated_ids"] = cc
-                    idx_tb += 1
-
-            file_debug = os.path.join(
-                self.hparams.output_dir,
-                val_outputs_folder,
-                "debug_" + str(self.val_count) + ".json",
-            )
-            save_json(tb_all, file_debug)
-
             output_test_predictions_file = os.path.join(
                 self.hparams.output_dir,
                 val_outputs_folder,
@@ -366,12 +341,10 @@ class AMR2TextModelModule(pl.LightningModule):
             bleu_info_tok = eval_bleu_sents_tok(
                 output_test_targets_file, output_test_predictions_file
             )
-            # chrf_info = eval_chrf(output_test_targets_file, output_test_predictions_file)
 
             rank_zero_info("number epoch: %s", self.val_count)
             rank_zero_info("%s corpus_bleu_info: %s", self.val_count, bleu_info)
             rank_zero_info("%s corpus_bleu_info_tok: %s", self.val_count, bleu_info_tok)
-            # rank_zero_info("%s chrf_info: %s", self.val_count, chrf_info)
 
             # exit()
         self.log_dict(all_metrics, sync_dist=True)
@@ -388,14 +361,13 @@ class AMR2TextModelModule(pl.LightningModule):
     
     def ids_to_clean_text(self, generated_ids: List[int]):
         gen_text = self.tokenizer.batch_decode(
-            generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=True
+            generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )
         return lmap(str.strip, gen_text)
 
     def _generative_step(self, batch: dict) -> dict:
         t0 = time.time()
         src_ids, src_mask = batch["input_ids"], batch["attention_mask"]
-        decoder_input_ids, lm_labels = batch["decoder_input_ids"], batch["labels"]
 
         generated_ids = self.model.generate(
             src_ids,
@@ -412,13 +384,6 @@ class AMR2TextModelModule(pl.LightningModule):
         gen_time = (time.time() - t0) / batch["input_ids"].shape[0]
         preds: List[str] = self.ids_to_clean_text(generated_ids)                    #
         target: List[str] = self.ids_to_clean_text(batch["labels"])                 #
-        # preds: List[str] = self.tokenizer.batch_decode(generated_ids.tolist())
-        # target: List[str] = self.tokenizer.batch_decode(batch["labels"].tolist())     #
-
-        a = self.tokenizer.batch_decode(batch["input_ids"].tolist())    # gold input
-        b = self.tokenizer.batch_decode(lm_labels.tolist())             # gold predict
-        c = self.tokenizer.batch_decode(generated_ids)                  # generated
-        e = self.tokenizer.batch_decode(decoder_input_ids.tolist())     # decoder input
 
         loss_tensors = self._step(batch)
         base_metrics = {name: loss for name, loss in zip(self.loss_names, loss_tensors)}
@@ -429,16 +394,39 @@ class AMR2TextModelModule(pl.LightningModule):
             gen_len=summ_len,
             preds=preds,
             target=target,
-            a=a,
-            b=b,
-            c=c,
-            e=e,
             **score,
         )
         return base_metrics
 
     def test_step(self, batch, batch_idx):
-        return self._generative_step(batch)
-
+        return self.predict_step(batch)
+    
     def test_epoch_end(self, outputs):
         return self.validation_epoch_end(outputs, prefix="test")
+
+    def predict_step(self, batch):
+        t0 = time.time()
+        src_ids, src_mask = batch["input_ids"], batch["attention_mask"]
+        
+        generated_ids = self.model.generate(
+            src_ids,
+            attention_mask=src_mask,
+            use_cache=True,
+            decoder_start_token_id=self.decoder_start_token_id,
+            eos_token_id=self.decoder_end_token_id,
+            num_beams=self.eval_beams,
+            no_repeat_ngram_size=0,
+            min_length=0,
+            max_length=self.eval_max_length,
+            length_penalty=self.eval_lenpen,
+        )
+        gen_time = (time.time() - t0) / batch["input_ids"].shape[0]
+        preds: List[str] = self.ids_to_clean_text(generated_ids)                    #
+        target: List[str] = self.ids_to_clean_text(batch["labels"])                 #
+
+        base_metrics = {"loss": 0.0, "bleu":0.0}
+        summ_len = np.mean(lmap(len, generated_ids))
+        base_metrics.update(
+            gen_time=gen_time, gen_len=summ_len, preds=preds, target=target
+        )
+        return base_metrics

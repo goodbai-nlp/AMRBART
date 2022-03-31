@@ -163,6 +163,7 @@ class AMR2TextDataModule(pl.LightningDataModule):
             collate_fn=self.collate_fn,
             shuffle=False,
             num_workers=self.val_num_worker,
+            pin_memory=True,
         )
 
     def load_data_module(self):
@@ -339,6 +340,7 @@ class AMRParsingDataModule(pl.LightningDataModule):
             collate_fn=self.collate_fn,
             shuffle=False,
             num_workers=self.val_num_worker,
+            pin_memory=True,
         )
 
     def load_data_module(self):

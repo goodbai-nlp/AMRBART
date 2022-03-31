@@ -313,7 +313,7 @@ class AMRParsingModelModule(pl.LightningModule):
         generative_metrics.update({k: v.item() for k, v in losses.items()})
         losses.update(generative_metrics)
         all_metrics = {f"{prefix}_avg_{k}": x for k, x in losses.items()}
-        all_metrics["val_count"] = self.val_count
+        all_metrics["val_count"] = float(self.val_count)
         # print('all_metrics:', all_metrics)
         # preds = flatten_list([x["preds"] for x in outputs])
         preds = [[[itm.item() for itm in y] for y in x["preds"]] for x in outputs]
@@ -451,7 +451,31 @@ class AMRParsingModelModule(pl.LightningModule):
         return base_metrics
 
     def test_step(self, batch, batch_idx):
-        return self._generative_step(batch)
+        return self.predict_step(batch)
 
     def test_epoch_end(self, outputs):
         return self.validation_epoch_end(outputs, prefix="test")
+
+    def predict_step(self, batch):
+        t0 = time.time()
+        src_ids, src_mask = batch["input_ids"], batch["attention_mask"]
+        generated_ids = self.model.generate(
+            src_ids,
+            attention_mask=src_mask,
+            use_cache=True,
+            decoder_start_token_id=self.decoder_start_token_id,
+            eos_token_id=self.decoder_end_token_id,
+            num_beams=self.eval_beams,
+            no_repeat_ngram_size=0,
+            min_length=0,
+            max_length=self.eval_max_length,
+            length_penalty=self.eval_lenpen,
+        )
+        gen_time = (time.time() - t0) / batch["input_ids"].shape[0]
+        preds = [itm.tolist() for itm in generated_ids]
+        base_metrics = {"loss": 0.0}
+        summ_len = np.mean(lmap(len, generated_ids))
+        base_metrics.update(
+            gen_time=gen_time, gen_len=summ_len, preds=preds,
+        )
+        return base_metrics

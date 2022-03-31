@@ -18,7 +18,7 @@ datacate=AMR2.0
 #datacate=TLP
 #datacate=Bio
 
-Tokenizer=../../../data/pretrained-model/bart-$modelcate
+Tokenizer=../../../data/pretrained-model/bart-$modelcate          # replace this path with a directory containing standard BART tokenizer files
 
 export OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLM
 
@@ -29,8 +29,12 @@ cache=../../../data/.cache/
 if [ ! -d $OUTPUT_DIR ];then
   mkdir -p $OUTPUT_DIR
 else
-  echo "${OUTPUT_DIR} already exists, change a new one or delete origin one"
-  exit 0
+  read -p "${OUTPUT_DIR} already exists, delete origin one [y/n]?" yn
+  case $yn in
+    [Yy]* ) rm -rf $OUTPUT_DIR; mkdir -p $OUTPUT_DIR;;
+    [Nn]* ) echo "exiting..."; exit;;
+    * ) echo "Please answer yes or no.";;
+  esac
 fi
 
 export OMP_NUM_THREADS=10
