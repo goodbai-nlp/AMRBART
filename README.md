@@ -65,6 +65,19 @@ bash eval_AMRbart_amrparsing.sh /path/to/fine-tuned/AMRBART/ gpu_id
 bash eval_AMRbart_amr2text.sh /path/to/fine-tuned/AMRBART/ gpu_id
 ```
 
+# Inference on your own data
+
+If you want to run our code on your own data, try to transform your data into the format [here](), then run 
+
+## AMR Parsing
+```
+bash inference_amr.sh /path/to/fine-tuned/AMRBART/ gpu_id
+```
+
+## AMR-to-text Generation
+```
+bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
+```
 
 # Pre-trained Models
 
