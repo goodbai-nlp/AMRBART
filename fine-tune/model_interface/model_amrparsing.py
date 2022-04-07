@@ -301,6 +301,7 @@ class AMRParsingModelModule(pl.LightningModule):
         self.val_count += 1
         print(f"Generating Kwargs: Num_beam: {self.eval_beams}, Max_len: {self.eval_max_length}")
         # print('ori outputs', outputs)
+        ori_outputs = outputs
         outputs = self.all_gather(outputs)
         # print('Gathered outputs', outputs)
         losses = {k: torch.stack([x[k] for x in outputs]).mean() for k in self.loss_names}
@@ -315,15 +316,9 @@ class AMRParsingModelModule(pl.LightningModule):
         all_metrics = {f"{prefix}_avg_{k}": x for k, x in losses.items()}
         all_metrics["val_count"] = float(self.val_count)
         # print('all_metrics:', all_metrics)
-        # preds = flatten_list([x["preds"] for x in outputs])
-        preds = [[[itm.item() for itm in y] for y in x["preds"]] for x in outputs]
-
-        preds_new = []
-        for iter in preds:
-            for ith_batch in iter:
-                preds_new.append(ith_batch)
-        preds = preds_new
-
+        preds = flatten_list([x["preds"] for x in ori_outputs])
+        source = flatten_list(x["source"] for x in ori_outputs)
+        
         lin_sentences = []
         for idx, tokens_same_source in enumerate(preds):
             # print("token_same_source", tokens_same_source)
@@ -360,13 +355,17 @@ class AMRParsingModelModule(pl.LightningModule):
             zip(*sorted(enumerate(graphs_same_source), key=lambda x: (x[1].status.value, x[0])))
         )[1]
         idx = 0
-        for gps in graphs:
+        assert len(graphs) == len(source), f"inconsistent lenths {len(graphs)} vs {len(source)}"
+        for gps, src in zip(graphs, source):
+            # print(gps, src)
+            # exit()
             for gp in gps:
                 # metadata = gg.metadata.copy()
                 metadata = {}
                 metadata["id"] = str(idx)
                 metadata["annotator"] = "bart-amr"
                 metadata["date"] = str(datetime.datetime.now())
+                metadata["snt"] = src.replace("<AMR>", '').replace("</AMR>", '').strip()
                 if "save-date" in metadata:
                     del metadata["save-date"]
                 gp.metadata = metadata
@@ -391,13 +390,12 @@ class AMRParsingModelModule(pl.LightningModule):
                 smatch_score = calculate_smatch(
                     self.hparams.data_dir + f"/{prefix}-gold.amr", output_test_predictions_file
                 )
-            except AttributeError:
+            except:
                 smatch_score = {"smatch": 0.0}
 
             rank_zero_info("number epoch: %s", self.step_count)
             rank_zero_info("%s smatch_score: %s", self.step_count, smatch_score)
 
-            # exit()
         all_metrics[f"{prefix}_avg_smatch"] = smatch_score["smatch"]
         metric_tensor: torch.FloatTensor = torch.tensor(smatch_score["smatch"]).type_as(loss)
         self.metrics[prefix].append(all_metrics)  # callback writes this to self.metrics_save_path
@@ -411,6 +409,7 @@ class AMRParsingModelModule(pl.LightningModule):
             f"{prefix}_{self.val_metric}": metric_tensor,
         }
 
+    
     def calc_generative_metrics(self, preds, target) -> Dict:
         # return calculate_rouge(preds, target)
         # return calculate_bleu(preds, target)
@@ -418,7 +417,7 @@ class AMRParsingModelModule(pl.LightningModule):
 
     def ids_to_clean_text(self, generated_ids: List[int]):
         gen_text = self.tokenizer.batch_decode(
-            generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=True
+            generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )
         return lmap(str.strip, gen_text)
 
@@ -472,10 +471,12 @@ class AMRParsingModelModule(pl.LightningModule):
             length_penalty=self.eval_lenpen,
         )
         gen_time = (time.time() - t0) / batch["input_ids"].shape[0]
+        source: List[str] = self.ids_to_clean_text(src_ids)
         preds = [itm.tolist() for itm in generated_ids]
+        # print("source", source)
         base_metrics = {"loss": 0.0}
-        summ_len = np.mean(lmap(len, generated_ids))
+        gen_len = np.mean(lmap(len, generated_ids))
         base_metrics.update(
-            gen_time=gen_time, gen_len=summ_len, preds=preds,
+            gen_time=gen_time, gen_len=gen_len, source=source, preds=preds,
         )
         return base_metrics
