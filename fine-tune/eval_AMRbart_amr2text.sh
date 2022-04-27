@@ -21,8 +21,7 @@ datacate=AMR2.0
 Tokenizer=../../../data/pretrained-model/bart-$modelcate          # replace this path with a directory containing standard BART tokenizer files,
 # Tokenizer="facebook/bart-$modelcate"						                  # uncomment this line if your device has access to the Internet
 
-#OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLM
-OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLMnew
+OUTPUT_DIR_NAME=outputs/Eval-$datacate-AMRBart-$modelcate-amr2text-6taskPLM
 
 OUTPUT_DIR=${ROOT_DIR}/${OUTPUT_DIR_NAME}
 CACHE_DIR=${ROOT_DIR}/../data/$datacate/.cache

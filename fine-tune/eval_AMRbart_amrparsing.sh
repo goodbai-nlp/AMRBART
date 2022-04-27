@@ -23,7 +23,6 @@ Tokenizer=../../../data/pretrained-model/bart-$modelcate          # replace this
 # Tokenizer="facebook/bart-$modelcate"						                  # uncomment this line if your device has access to the Internet
 
 OUTPUT_DIR_NAME=outputs/Eval-${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM
-OUTPUT_DIR_NAME=outputs/Eval-${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM-0427
 
 OUTPUT_DIR=${ROOT_DIR}/${OUTPUT_DIR_NAME}
 CACHE_DIR=${ROOT_DIR}/../data/$datacate/.cache
