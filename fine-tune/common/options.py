@@ -15,7 +15,7 @@ def add_model_specific_args(parser, root_dir):
     parser.add_argument(
         "--model_type",
         type=str,
-        required=True,
+        required=False,
         help="The model architecture to be trained or fine-tuned.",
     )
     parser.add_argument(

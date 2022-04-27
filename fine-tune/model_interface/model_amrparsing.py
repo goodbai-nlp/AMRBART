@@ -440,12 +440,13 @@ class AMRParsingModelModule(pl.LightningModule):
         )
         gen_time = (time.time() - t0) / batch["input_ids"].shape[0]
         preds = [itm.tolist() for itm in generated_ids]
-
+        source: List[str] = self.ids_to_clean_text(src_ids)
+        
         loss_tensors = self._step(batch)
         base_metrics = {name: loss for name, loss in zip(self.loss_names, loss_tensors)}
         summ_len = np.mean(lmap(len, generated_ids))
         base_metrics.update(
-            gen_time=gen_time, gen_len=summ_len, preds=preds,
+            gen_time=gen_time, gen_len=summ_len, preds=preds, source=source,
         )
         return base_metrics
 

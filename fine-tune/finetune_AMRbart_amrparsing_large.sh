@@ -16,45 +16,50 @@ datacate=AMR2.0
 
 
 Tokenizer=../../../data/pretrained-model/bart-$modelcate
-export OUTPUT_DIR_NAME=outputs/${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM-5e-5-finetune-lr${lr}
+# Tokenizer="facebook/bart-$modelcate"						                  # uncomment this line if your device has access to the Internet
 
-export CURRENT_DIR=${ROOT_DIR}
-export OUTPUT_DIR=${CURRENT_DIR}/${OUTPUT_DIR_NAME}
-cache=../../../data/.cache/
+OUTPUT_DIR_NAME=outputs/${datacate}-AMRBart-${modelcate}-amrparsing-6taskPLM-5e-5-finetune-lr${lr}
+OUTPUT_DIR=${ROOT_DIR}/${OUTPUT_DIR_NAME}
+CACHE_DIR=${ROOT_DIR}/../data/$datacate/.cache
 
-if [ ! -d $OUTPUT_DIR ];then
-  mkdir -p $OUTPUT_DIR
+mkdir -p ${CACHE_DIR}
+if [ ! -d ${OUTPUT_DIR} ];then
+  mkdir -p ${OUTPUT_DIR}
 else
-  echo "${OUTPUT_DIR} already exists, change a new one or delete origin one"
-  exit 0
+  read -p "${OUTPUT_DIR} already exists, delete origin one [y/n]?" yn
+  case $yn in
+    [Yy]* ) rm -rf ${OUTPUT_DIR}; mkdir -p ${OUTPUT_DIR};;
+    [Nn]* ) echo "exiting..."; exit;;
+    * ) echo "Please answer yes or no.";;
+  esac
 fi
 
 export OMP_NUM_THREADS=10
 export CUDA_VISIBLE_DEVICES=${GPUID}
 python -u ${ROOT_DIR}/run_amrparsing.py \
-    --data_dir=../data/$datacate \
-    --train_data_file=../data/$datacate/train.jsonl \
-    --eval_data_file=../data/$datacate/val.jsonl \
-    --test_data_file=../data/$datacate/test.jsonl \
+    --data_dir ${ROOT_DIR}/../data/$datacate \
+    --train_data_file ${ROOT_DIR}/../data/$datacate/train.jsonl \
+    --eval_data_file ${ROOT_DIR}/../data/$datacate/val.jsonl \
+    --test_data_file ${ROOT_DIR}/../data/$datacate/test.jsonl \
     --model_type ${MODEL} \
-    --model_name_or_path=${MODEL} \
-    --tokenizer_name_or_path=${Tokenizer} \
+    --model_name_or_path ${MODEL} \
+    --tokenizer_name_or_path ${Tokenizer} \
     --val_metric "smatch" \
-    --learning_rate=${lr} \
+    --learning_rate ${lr} \
     --max_epochs 20 \
     --max_steps -1 \
-    --per_gpu_train_batch_size=4 \
-    --per_gpu_eval_batch_size=4 \
+    --per_gpu_train_batch_size 4 \
+    --per_gpu_eval_batch_size 4 \
     --unified_input \
     --accumulate_grad_batches 2 \
     --early_stopping_patience 10 \
     --gpus 1 \
-    --output_dir=${OUTPUT_DIR} \
-    --cache_dir ${cache} \
+    --output_dir ${OUTPUT_DIR} \
+    --cache_dir ${CACHE_DIR} \
     --num_sanity_val_steps 4 \
-    --src_block_size=512 \
-    --tgt_block_size=1024 \
-    --eval_max_length=1024 \
+    --src_block_size 512 \
+    --tgt_block_size 1024 \
+    --eval_max_length 1024 \
     --train_num_workers 8 \
     --eval_num_workers 4 \
     --process_num_workers 8 \
