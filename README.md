@@ -87,23 +87,25 @@ bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
 
 |Setting| Params | checkpoint |
 |  :----:  | :----:  |:---:|
-| AMRBART-base  | 142M | [model](https://1drv.ms/u/s!ArC7JSpdBblgpBZaL8-lr8wThJH7?e=7nW3Gm) |
-| AMRBART-large | 409M | [model](https://1drv.ms/u/s!ArC7JSpdBblgpC2Fnu0JFCLYHC8f?e=jA1wte) |
+| AMRBART-base  | 142M | [model](https://huggingface.co/xfbai/AMRBART-base) |
+| AMRBART-large | 409M | [model](https://huggingface.co/xfbai/AMRBART-large) |
 
 
 ## Fine-tuned models on AMR-to-Text Generation
 
 |Setting|  BLEU(tok)  | BLEU(detok) | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  | :----:  |
-| AMRBART-large (AMR2.0)  | 49.8 | 45.7 | [model](https://1drv.ms/u/s!ArC7JSpdBblgpHmdWyLl0h33iHGH?e=c3eGc3) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzjnvvojZlXMx4RD?e=1CigkX) |
-| AMRBART-large (AMR3.0) | 49.2 | 45.0 | [model](https://1drv.ms/u/s!ArC7JSpdBblgpSfZv9epNcNzelij?e=0Pkj8V) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzdLAC4rmIfSlPyN?e=UVPSyp) |
+| AMRBART-large (AMR2.0)  | 49.8 | 45.7 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzjnvvojZlXMx4RD?e=1CigkX) |
+| AMRBART-large (AMR3.0) | 49.2 | 45.0 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzdLAC4rmIfSlPyN?e=UVPSyp) |
+
+To get the tokenized bleu score, you need to use the scorer we provide [here](https://github.com/muyeby/AMRBART/blob/main/fine-tune/evaluation/eval_gen.sh). We use this script in order to ensure comparability with previous approaches.
 
 ## Fine-tuned models on AMR Parsing
 
 |Setting|  Smatch | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.4 | [model](https://1drv.ms/u/s!ArC7JSpdBblgpmeACrXnm6pS9SSN?e=hOQ5Xz) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzpWyvMnJy7-T6W6?e=0LQliX) |
-| AMRBART-large (AMR3.0)  | 84.2 | [model](https://1drv.ms/u/s!ArC7JSpdBblgpw4c1qK3YEjVPr9P?e=DWfWf8) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzzwPKcWQQuaj9IF?e=rkTjCu) |
+| AMRBART-large (AMR2.0)  | 85.4 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzpWyvMnJy7-T6W6?e=0LQliX) |
+| AMRBART-large (AMR3.0)  | 84.2 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzzwPKcWQQuaj9IF?e=rkTjCu) |
 
 
 # Todo
@@ -127,3 +129,4 @@ bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
     pages = "todo"
 }
 ```
+
