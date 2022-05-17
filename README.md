@@ -111,7 +111,8 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 # Todo
 + clean code
 
-
+# Acknowledgements
+We thank authors of [SPRING](https://github.com/SapienzaNLP/spring), [amrlib](https://github.com/bjascob/amrlib), and [BLINK](https://github.com/facebookresearch/BLINK) that share open-source scripts for this project.
 # References
 ```
 @inproceedings{bai-etal-2022-graph,
