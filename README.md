@@ -111,22 +111,22 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 # Todo
 + clean code
 
-
+# Acknowledgements
+We thank authors of [SPRING](https://github.com/SapienzaNLP/spring), [amrlib](https://github.com/bjascob/amrlib), and [BLINK](https://github.com/facebookresearch/BLINK) that share open-source scripts for this project.
 # References
 ```
 @inproceedings{bai-etal-2022-graph,
     title = "Graph Pre-training for {AMR} Parsing and Generation",
     author = "Bai, Xuefeng  and
-      Chen, Yulong and
+      Chen, Yulong  and
       Zhang, Yue",
     booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
     month = may,
     year = "2022",
-    address = "Online",
+    address = "Dublin, Ireland",
     publisher = "Association for Computational Linguistics",
-    url = "todo",
-    doi = "todo",
-    pages = "todo"
+    url = "https://aclanthology.org/2022.acl-long.415",
+    pages = "6001--6015"
 }
 ```
 
