@@ -104,7 +104,7 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 
 |Setting|  Smatch | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.5 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing) | [output](https://1drv.ms/u/s!ArC7JSpdBblgsnMSjUB4TPrZvgG9?e=aXo12B) |
+| AMRBART-large (AMR2.0)  | 85.5 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnVc12FWdgn2az_6?e=IriT18) |
 | AMRBART-large (AMR3.0)  | 84.4 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnQIkOLc4hA-X0qg?e=6dhUba) |
 
 
