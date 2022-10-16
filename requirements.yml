@@ -19,9 +19,8 @@ dependencies:
   - configargparse
   - sacrebleu
   - rouge-score
-  - datasets==1.11
-  - transformers==4.8.2
-  - pytorch-lightning==1.5.0
+  - datasets==2.4.0
+  - transformers==4.21.3
   - nltk
   - cached_property
   - networkx
