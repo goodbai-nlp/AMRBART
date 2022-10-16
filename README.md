@@ -1,5 +1,5 @@
 # AMRBART
-An implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](https://arxiv.org/pdf/2203.07836.pdf) (Arxiv).
+A refactored implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](https://arxiv.org/pdf/2203.07836.pdf) (Arxiv).
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/graph-pre-training-for-amr-parsing-and-1/amr-to-text-generation-on-ldc2017t10)](https://paperswithcode.com/sota/amr-to-text-generation-on-ldc2017t10?p=graph-pre-training-for-amr-parsing-and-1)
 
@@ -12,27 +12,23 @@ An implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Gene
 # Requirements
 + python 3.8
 + pytorch 1.8
-+ transformers 4.8.2
-+ pytorch-lightning 1.5.0
++ transformers 4.21.3
++ datasets 2.4.0
 + Tesla V100 or A100
 
 We recommend to use conda to manage virtual environments:
 ```
 conda env update --name <env> --file requirements.yml
 ```
-We also provide a docker image [here](https://hub.docker.com/layers/muyeby/docker-pytorch/cuda11.1py38torch1.8AMRPLM/images/sha256-c8c86f32d5e23787b0b3fbe70014ffeba693b3a5fad50fa31cf3bb664ee3def7?context=explore).
 
 # Data Processing
 
 <!-- Since AMR corpus require LDC license, we upload some examples for format reference. If you have the license, feel free to contact us for getting the preprocessed data. -->
 You may download the AMR corpora at [LDC](https://www.ldc.upenn.edu).
 
-We follow [Spring](https://github.com/SapienzaNLP/spring) to preprocess AMR graphs:
-```
-# 1. install spring 
-cd spring && pip install -e .
-# 2. processing data
-bash run-preprocess.sh
+Please follow [this respository](https://github.com/goodbai-nlp/AMR-Process) to preprocess AMR graphs:
+``` 
+bash run-preprocess-acl2022.sh
 ```
 
 
@@ -45,25 +41,29 @@ bash run-posttrain-bart-textinf-joint-denoising-6task-large-unified-V100.sh /pat
 
 For **AMR Parsing**, run
 ```
-bash finetune_AMRbart_amrparsing.sh /path/to/pre-trained/AMRBART/ gpu_id
+bash train-AMRBART-large-AMRParsing.sh /path/to/pre-trained/AMRBART/
 ```
 
 For **AMR-to-text Generation**, run
 ```
-bash finetune_AMRbart_amr2text.sh /path/to/pre-trained/AMRBART/ gpu_id
+bash train-AMRBART-large-AMR2Text.sh /path/to/pre-trained/AMRBART/
 ```
 
 
 # Evaluation
+```
+cd evaluation
+```
 
 For **AMR Parsing**, run
 ```
-bash eval_AMRbart_amrparsing.sh /path/to/fine-tuned/AMRBART/ gpu_id
+bash eval_smatch.sh /path/to/gold-amr /path/to/predicted-amr
 ```
+For better results, you can postprocess the predicted AMRs using the BLINK tool.
 
 For **AMR-to-text Generation**, run
 ```
-bash eval_AMRbart_amr2text.sh /path/to/fine-tuned/AMRBART/ gpu_id
+bash eval_gen.sh /path/to/gold-text /path/to/predicted-text
 ```
 
 # Inference on your own data
@@ -72,12 +72,12 @@ If you want to run our code on your own data, try to transform your data into th
 
 For **AMR Parsing**, run
 ```
-bash inference_amr.sh /path/to/fine-tuned/AMRBART/ gpu_id
+bash inference_amr.sh /path/to/fine-tuned/AMRBART/
 ```
 
 For **AMR-to-text Generation**, run
 ```
-bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
+bash inference_text.sh /path/to/fine-tuned/AMRBART/
 ```
 
 # Pre-trained Models
@@ -87,13 +87,12 @@ bash inference_text.sh /path/to/fine-tuned/AMRBART/ gpu_id
 
 |Setting| Params | checkpoint |
 |  :----:  | :----:  |:---:|
-| AMRBART-base  | 142M | [model](https://huggingface.co/xfbai/AMRBART-base) |
 | AMRBART-large | 409M | [model](https://huggingface.co/xfbai/AMRBART-large) |
 
 
 ## Fine-tuned models on AMR-to-Text Generation
 
-|Setting|  BLEU(tok)  | BLEU(detok) | checkpoint | output | 
+|Setting|  BLEU(JAMR_tok)  | Sacre-BLEU | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  | :----:  |
 | AMRBART-large (AMR2.0)  | 49.8 | 45.7 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzjnvvojZlXMx4RD?e=1CigkX) |
 | AMRBART-large (AMR3.0) | 49.2 | 45.0 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzdLAC4rmIfSlPyN?e=UVPSyp) |
@@ -107,9 +106,6 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 | AMRBART-large (AMR2.0)  | 85.5 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnVc12FWdgn2az_6?e=IriT18) |
 | AMRBART-large (AMR3.0)  | 84.4 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnQIkOLc4hA-X0qg?e=6dhUba) |
 
-
-# Todo
-+ clean code
 
 # Acknowledgements
 We thank authors of [SPRING](https://github.com/SapienzaNLP/spring), [amrlib](https://github.com/bjascob/amrlib), and [BLINK](https://github.com/facebookresearch/BLINK) that share open-source scripts for this project.
