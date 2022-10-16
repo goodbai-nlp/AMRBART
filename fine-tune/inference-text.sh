@@ -1,11 +1,10 @@
 export CUDA_VISIBLE_DEVICES=0
 RootDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-Dataset=LDC2020
-Dataset=LDC2017
+Dataset=examples
 
 BasePath=/mnt/nfs-storage/data        # change dir here
-DataPath=$RootDir/data/$Dataset
+DataPath=$RootDir/../$Dataset
 
 ModelCate=AMRBART-large
 
@@ -16,7 +15,7 @@ DataCache=$DataPath/.cache/dump-amr2text
 lr=1e-6
 lr=2e-6
 
-OutputDir=${RootDir}/outputs/Eval-$Dataset-$ModelCate-AMR2Text-bsz8-lr-${lr}-UnifiedInp
+OutputDir=${RootDir}/outputs/Infer-$Dataset-$ModelCate-AMR2Text-bsz8-lr-${lr}-UnifiedInp
 
 if [ ! -d ${OutputDir} ];then
   mkdir -p ${OutputDir}
@@ -41,7 +40,7 @@ python -u main.py \
     --task "amr2text" \
     --train_file $DataPath/train.jsonl \
     --validation_file $DataPath/val.jsonl \
-    --test_file $DataPath/test.jsonl \
+    --test_file $DataPath/data4generation.jsonl \
     --output_dir $OutputDir \
     --cache_dir $ModelCache \
     --data_cache_dir $DataCache \
@@ -49,7 +48,7 @@ python -u main.py \
     --overwrite_output_dir \
     --unified_input True \
     --per_device_train_batch_size 8 \
-    --per_device_eval_batch_size 16 \
+    --per_device_eval_batch_size 8 \
     --gradient_accumulation_steps 1 \
     --learning_rate $lr \
     --optim "adamw_hf" \

@@ -1,11 +1,10 @@
 export CUDA_VISIBLE_DEVICES=0
 RootDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-Dataset=LDC2020
-Dataset=LDC2017
+Dataset=examples
 
-BasePath=/mnt/nfs-storage/data        # change dir here
-DataPath=$RootDir/data/$Dataset
+BasePath=/mnt/nfs-storage/data                    # change dir here
+DataPath=$RootDir/../$Dataset
 
 ModelCate=AMRBART-large
 
@@ -15,7 +14,7 @@ DataCache=$DataPath/.cache/dump-amrparsing
 
 lr=1e-5
 
-OutputDir=${RootDir}/outputs/Eval-$Dataset-${ModelCate}-AMRParing-bsz16-lr-${lr}-UnifiedInp
+OutputDir=${RootDir}/outputs/Infer-$Dataset-${ModelCate}-AMRParing-bsz16-lr-${lr}-UnifiedInp
 
 if [ ! -d ${OutputDir} ];then
   mkdir -p ${OutputDir}
@@ -40,7 +39,7 @@ python -u main.py \
     --task "text2amr" \
     --train_file $DataPath/train.jsonl \
     --validation_file $DataPath/val.jsonl \
-    --test_file $DataPath/test.jsonl \
+    --test_file $DataPath/data4parsing.jsonl \
     --output_dir $OutputDir \
     --cache_dir $ModelCache \
     --data_cache_dir $DataCache \
