@@ -103,8 +103,8 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 
 |Setting|  Smatch | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.5 | [model](todo) | [output](todo) |
-| AMRBART-large (AMR3.0)  | 84.4 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR2.0)  | 85.6 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR3.0)  | 84.3 | [model](todo) | [output](todo) |
 
 
 # Acknowledgements
@@ -125,4 +125,3 @@ We thank authors of [SPRING](https://github.com/SapienzaNLP/spring), [amrlib](ht
     pages = "6001--6015"
 }
 ```
-
