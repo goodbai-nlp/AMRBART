@@ -1,5 +1,5 @@
 # AMRBART
-A refactored implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](https://arxiv.org/pdf/2203.07836.pdf) (Arxiv).
+The refactored implementation for ACL2022 paper "Graph Pre-training for AMR Parsing and Generation". You may find our paper [here](https://arxiv.org/pdf/2203.07836.pdf) (Arxiv). The original implementation is avaliable [here](https://github.com/goodbai-nlp/AMRBART/tree/acl2022)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/graph-pre-training-for-amr-parsing-and-1/amr-to-text-generation-on-ldc2017t10)](https://paperswithcode.com/sota/amr-to-text-generation-on-ldc2017t10?p=graph-pre-training-for-amr-parsing-and-1)
 
@@ -59,7 +59,7 @@ For **AMR Parsing**, run
 ```
 bash eval_smatch.sh /path/to/gold-amr /path/to/predicted-amr
 ```
-For better results, you can postprocess the predicted AMRs using the BLINK tool.
+For better results, you can postprocess the predicted AMRs using the [BLINK](https://github.com/facebookresearch/BLINK) tool following [SPRING](https://github.com/SapienzaNLP/spring).
 
 For **AMR-to-text Generation**, run
 ```
@@ -87,15 +87,15 @@ bash inference_text.sh /path/to/fine-tuned/AMRBART/
 
 |Setting| Params | checkpoint |
 |  :----:  | :----:  |:---:|
-| AMRBART-large | 409M | [model](https://huggingface.co/xfbai/AMRBART-large) |
+| AMRBART-large | 409M | [model](todo) |
 
 
 ## Fine-tuned models on AMR-to-Text Generation
 
 |Setting|  BLEU(JAMR_tok)  | Sacre-BLEU | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  | :----:  |
-| AMRBART-large (AMR2.0)  | 49.8 | 45.7 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzjnvvojZlXMx4RD?e=1CigkX) |
-| AMRBART-large (AMR3.0) | 49.2 | 45.0 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMR2Text) | [output](https://1drv.ms/t/s!ArC7JSpdBblgpzdLAC4rmIfSlPyN?e=UVPSyp) |
+| AMRBART-large (AMR2.0)  | 50.76 | 50.44 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR3.0) | 50.29 | 50.38 | [model](todo) | [output](todo) |
 
 To get the tokenized bleu score, you need to use the scorer we provide [here](https://github.com/muyeby/AMRBART/blob/main/fine-tune/evaluation/eval_gen.sh). We use this script in order to ensure comparability with previous approaches.
 
@@ -103,8 +103,8 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 
 |Setting|  Smatch | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.5 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnVc12FWdgn2az_6?e=IriT18) |
-| AMRBART-large (AMR3.0)  | 84.4 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsnQIkOLc4hA-X0qg?e=6dhUba) |
+| AMRBART-large (AMR2.0)  | 85.5 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR3.0)  | 84.4 | [model](todo) | [output](todo) |
 
 
 # Acknowledgements
