@@ -28,7 +28,7 @@ You may download the AMR corpora at [LDC](https://www.ldc.upenn.edu).
 
 Please follow [this respository](https://github.com/goodbai-nlp/AMR-Process) to preprocess AMR graphs:
 ``` 
-bash run-preprocess-acl2022.sh
+bash run-process-acl2022.sh
 ```
 
 
