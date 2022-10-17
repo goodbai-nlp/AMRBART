@@ -87,15 +87,15 @@ bash inference_text.sh /path/to/fine-tuned/AMRBART/
 
 |Setting| Params | checkpoint |
 |  :----:  | :----:  |:---:|
-| AMRBART-large | 409M | [model](todo) |
+| AMRBART-large | 409M | [model](https://huggingface.co/xfbai/AMRBART-large-v2) |
 
 
 ## Fine-tuned models on AMR-to-Text Generation
 
 |Setting|  BLEU(JAMR_tok)  | Sacre-BLEU | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  | :----:  |
-| AMRBART-large (AMR2.0)  | 50.76 | 50.44 | [model](todo) | [output](todo) |
-| AMRBART-large (AMR3.0) | 50.29 | 50.38 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR2.0)  | 50.76 | 50.44 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMR2Text-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgswHoArZOm8ej0yhB?e=0jxWTK) |
+| AMRBART-large (AMR3.0) | 50.29 | 50.38 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMR2Text-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgswB1X7XrPjlxUtnn?e=zlowU9) |
 
 To get the tokenized bleu score, you need to use the scorer we provide [here](https://github.com/muyeby/AMRBART/blob/main/fine-tune/evaluation/eval_gen.sh). We use this script in order to ensure comparability with previous approaches.
 
@@ -103,8 +103,8 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 
 |Setting|  Smatch | checkpoint | output | 
 |  :----:  | :----:  |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.6 | [model](todo) | [output](todo) |
-| AMRBART-large (AMR3.0)  | 84.3 | [model](todo) | [output](todo) |
+| AMRBART-large (AMR2.0)  | 85.6 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing-v2) | [output](https://1drv.ms/u/s!ArC7JSpdBblgsn6JyLFzamd13NVX?e=BIiDDe) |
+| AMRBART-large (AMR3.0)  | 84.3 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing-v2) | [output](https://1drv.ms/u/s!ArC7JSpdBblgsn8sztsYHacwMIcw?e=dwjNuV) |
 
 
 # Acknowledgements
