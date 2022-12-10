@@ -48,10 +48,15 @@ class AMRParsingDataSet(Dataset):
         self.max_tgt_length = min(args.max_target_length, self.tokenizer.model_max_length)
 
         data_files = {}
-        data_files["train"] = self.train_file
-        data_files["validation"] = self.validation_file
-        data_files["test"] = self.test_file
-
+        if self.train_file is not None:
+            data_files["train"] = self.train_file
+            
+        if self.validation_file is not None:
+            data_files["validation"] = self.validation_file
+            
+        if self.test_file is not None:
+            data_files["test"] = self.test_file
+        
         # print("datafiles:", data_files)
         print("Dataset cache dir:", self.cache_dir)
         # exit()
@@ -68,13 +73,13 @@ class AMRParsingDataSet(Dataset):
         amr = examples["src"]  # AMR tokens
         txt = examples["tgt"]  # Text tokens
 
-        amr_ids = [self.tokenizer.tokenize_amr(itm.split())[:self.max_src_length - 2] + [self.tokenizer.amr_eos_token_id] for itm in amr]
+        amr_ids = [self.tokenizer.tokenize_amr(itm.split())[:self.max_tgt_length-2] + [self.tokenizer.amr_eos_token_id] for itm in amr]
         
         raw_txt_ids = self.tokenizer(
-            txt, max_length=self.max_tgt_length, padding=False, truncation=True
+            txt, max_length=self.max_src_length, padding=False, truncation=True
         )["input_ids"]
         if self.unified_input:
-            txt_ids = [itm[:self.max_tgt_length-3] + [self.tokenizer.amr_bos_token_id, self.tokenizer.mask_token_id, self.tokenizer.amr_eos_token_id] for itm in raw_txt_ids]
+            txt_ids = [itm[:self.max_src_length-3] + [self.tokenizer.amr_bos_token_id, self.tokenizer.mask_token_id, self.tokenizer.amr_eos_token_id] for itm in raw_txt_ids]
         else:
             txt_ids = raw_txt_ids
         return {
@@ -175,10 +180,14 @@ class AMR2TextDataSet(Dataset):
         self.max_tgt_length = min(args.max_target_length, self.tokenizer.model_max_length)
 
         data_files = {}
-        data_files["train"] = self.train_file
-        data_files["validation"] = self.validation_file
-        data_files["test"] = self.test_file
-
+        if self.train_file is not None:
+            data_files["train"] = self.train_file
+            
+        if self.validation_file is not None:
+            data_files["validation"] = self.validation_file
+            
+        if self.test_file is not None:
+            data_files["test"] = self.test_file
         # print("datafiles:", data_files)
         print("Dataset cache dir:", self.cache_dir)
         # exit()

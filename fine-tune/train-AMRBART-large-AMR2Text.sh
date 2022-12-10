@@ -12,13 +12,10 @@ ModelCate=AMRBART-large
 MODEL=$1
 ModelCache=$BasePath/.cache
 DataCache=$DataPath/.cache/dump-amr2text
-DataCache=$DataPath/.cache/dump-amr2text-debug
 
-lr=1e-6
 lr=2e-6
 
 OutputDir=${RootDir}/outputs/$Dataset-$ModelCate-AMR2Text-bsz8-lr-${lr}-UnifiedInp
-OutputDir=${RootDir}/outputs/$Dataset-$ModelCate-AMR2Text-bsz8-lr-${lr}-UnifiedInp-debug
 
 if [ ! -d ${OutputDir} ];then
   mkdir -p ${OutputDir}

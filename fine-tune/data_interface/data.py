@@ -55,24 +55,25 @@ class AMRData(datasets.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         """Returns SplitGenerators."""
 
-        train_path = self.config.data_files["train"]
-        dev_path = self.config.data_files["validation"]
-        test_path = self.config.data_files["test"]
+        train_path = self.config.data_files["train"] if "train" in self.config.data_files else None
+        dev_path = self.config.data_files["validation"] if "validation" in self.config.data_files else None
+        test_path = self.config.data_files["test"] if "test" in self.config.data_files else None
+        
+        train_generator = datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": train_path})
+        dev_generator = datasets.SplitGenerator(name=datasets.Split.VALIDATION, gen_kwargs={"filepath": dev_path})
+        test_generator = datasets.SplitGenerator(name=datasets.Split.TEST, gen_kwargs={"filepath": test_path})
         return [
-            datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": train_path}),
-            datasets.SplitGenerator(
-                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": dev_path}
-            ),
-            datasets.SplitGenerator(name=datasets.Split.TEST, gen_kwargs={"filepath": test_path}),
+            train_generator, dev_generator, test_generator
         ]
 
     def _generate_examples(self, filepath):
         """Yields examples."""
-        logger.info("generating examples from = %s", filepath[0])
-        with open(filepath[0], "r", encoding="utf-8") as f:
-            lines = f.readlines()
-            for idx, line in enumerate(lines):
-                json_dict = json.loads(line.strip())
-                src = json_dict["amr"]
-                tgt = json_dict["sent"]
-                yield idx, {_SRC: src, _TGT: tgt}
+        if filepath:
+            logger.info("generating examples from = %s", filepath[0])
+            with open(filepath[0], "r", encoding="utf-8") as f:
+                lines = f.readlines()
+                for idx, line in enumerate(lines):
+                    json_dict = json.loads(line.strip())
+                    src = json_dict["amr"]
+                    tgt = json_dict["sent"]
+                    yield idx, {_SRC: src, _TGT: tgt}

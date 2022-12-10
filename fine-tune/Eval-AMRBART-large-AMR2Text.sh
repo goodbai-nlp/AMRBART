@@ -13,10 +13,9 @@ MODEL=$1
 ModelCache=$BasePath/.cache
 DataCache=$DataPath/.cache/dump-amr2text
 
-lr=1e-6
 lr=2e-6
 
-OutputDir=${RootDir}/outputs/Eval-$Dataset-$ModelCate-AMR2Text-bsz8-lr-${lr}-UnifiedInp
+OutputDir=${RootDir}/outputs/Eval-$Dataset-$ModelCate-AMR2Text-bsz16-lr-${lr}-UnifiedInp
 
 if [ ! -d ${OutputDir} ];then
   mkdir -p ${OutputDir}
@@ -39,7 +38,6 @@ fi
 python -u main.py \
     --data_dir $DataPath \
     --task "amr2text" \
-    --train_file $DataPath/train.jsonl \
     --validation_file $DataPath/val.jsonl \
     --test_file $DataPath/test.jsonl \
     --output_dir $OutputDir \
@@ -48,42 +46,23 @@ python -u main.py \
     --model_name_or_path $MODEL \
     --overwrite_output_dir \
     --unified_input True \
-    --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 16 \
-    --gradient_accumulation_steps 1 \
-    --learning_rate $lr \
-    --optim "adamw_hf" \
-    --lr_scheduler_type "polynomial" \
-    --warmup_steps 200 \
-    --num_train_epochs 30 \
-    --early_stopping 10 \
     --max_source_length 1024 \
-    --max_target_length 384 \
-    --val_max_target_length 384 \
-    --generation_max_length 380 \
+    --max_target_length 400 \
+    --val_max_target_length 400 \
+    --generation_max_length 400 \
     --generation_num_beams 5 \
-    --label_smoothing_factor 0.1 \
-    --evaluation_strategy "epoch" \
-    --weight_decay 0.01 \
-    --max_grad_norm 0 \
-    --max_steps -1 \
     --predict_with_generate \
     --smart_init False \
     --use_fast_tokenizer False \
     --logging_dir $OutputDir/logs \
-    --logging_first_step True \
-    --logging_steps 10 \
-    --save_strategy "epoch" \
-    --save_total_limit 1 \
     --seed 42 \
     --fp16 \
     --fp16_backend "auto" \
     --dataloader_num_workers 8 \
     --eval_dataloader_num_workers 2 \
-    --load_best_model_at_end True \
     --metric_for_best_model "eval_bleu" \
     --include_inputs_for_metrics \
-    --greater_is_better True \
     --do_eval \
     --do_predict \
     --ddp_find_unused_parameters False \
