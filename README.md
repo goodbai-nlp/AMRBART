@@ -44,12 +44,12 @@ tokenizer = AMRBartTokenizer.from_pretrained("xfbai/AMRBART-large-finetuned-AMR3
 ```
 
 
-# Pre-training
+## Pre-training
 ```
 bash run-posttrain-bart-textinf-joint-denoising-6task-large-unified-V100.sh "facebook/bart-large"
 ```
 
-# Fine-tuning
+## Fine-tuning
 
 For **AMR Parsing**, run
 ```
@@ -62,7 +62,7 @@ bash train-AMRBART-large-AMR2Text.sh "xfbai/AMRBART-large-v2"
 ```
 
 
-# Evaluation
+## Evaluation
 ```
 cd evaluation
 ```
@@ -78,7 +78,7 @@ For **AMR-to-text Generation**, run
 bash eval_gen.sh /path/to/gold-text /path/to/predicted-text
 ```
 
-# Inference on your own data
+## Inference on your own data
 
 If you want to run our code on your own data, try to transform your data into the format [here](https://github.com/muyeby/AMRBART/tree/main/examples), then run 
 
