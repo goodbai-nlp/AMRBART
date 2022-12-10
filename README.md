@@ -119,6 +119,7 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 | AMRBART-large (AMR3.0)  | 84.4 | 84.2 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsyuzmOH_0GMBr9m7?e=qtz2RD) |
 
 
+
 # Acknowledgements
 We thank authors of [SPRING](https://github.com/SapienzaNLP/spring), [amrlib](https://github.com/bjascob/amrlib), and [BLINK](https://github.com/facebookresearch/BLINK) that share open-source scripts for this project.
 # References
