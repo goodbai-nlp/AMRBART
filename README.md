@@ -9,6 +9,11 @@ The refactored implementation for ACL2022 paper "Graph Pre-training for AMR Pars
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/graph-pre-training-for-amr-parsing-and-1/amr-parsing-on-ldc2020t02)](https://paperswithcode.com/sota/amr-parsing-on-ldc2020t02?p=graph-pre-training-for-amr-parsing-and-1)
 
+**News**🎈
+
+- (2022/12/10) fix max_length bugs in AMR parsing and update results.
+- (2022/10/16) release the AMRBART-v2 model which is simpler, faster, and stronger.
+
 # Requirements
 + python 3.8
 + pytorch 1.8
