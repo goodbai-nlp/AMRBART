@@ -85,7 +85,7 @@ bash eval_gen.sh /path/to/gold-text /path/to/predicted-text
 
 ## Inference on your own data
 
-If you want to run our code on your own data, try to transform your data into the format [here](https://github.com/muyeby/AMRBART/tree/main/examples), then run 
+If you want to run our code on your own data, try to transform your data into the format [here](https://github.com/goodbai-nlp/AMRBART/blob/main/examples/data4parsing.jsonl), then run 
 
 For **AMR Parsing**, run
 ```
