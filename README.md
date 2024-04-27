@@ -118,10 +118,10 @@ To get the tokenized bleu score, you need to use the scorer we provide [here](ht
 
 ## Fine-tuned models on AMR Parsing
 
-|Setting|  Smatch(amrlib) | Smatch(amr-evaluation) | checkpoint | output | 
-|  :----:  | :----: |:---: |:---:|  :----:  |
-| AMRBART-large (AMR2.0)  | 85.5 | 85.3  | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsywfCHhxkM6DGfbL?e=OxynaR) |
-| AMRBART-large (AMR3.0)  | 84.4 | 84.2 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsyuzmOH_0GMBr9m7?e=qtz2RD) |
+|Setting|  Smatch(amrlib) | Smatch(amr-evaluation) | Smatch++(smatchpp) | checkpoint | output | 
+|  :----:  | :----: |:---: |:---:|  :----:  | :----:  |
+| AMRBART-large (AMR2.0)  | 85.5 | 85.3  | 85.4 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR2.0-AMRParsing-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsywfCHhxkM6DGfbL?e=OxynaR) |
+| AMRBART-large (AMR3.0)  | 84.4 | 84.2 | 84.3 | [model](https://huggingface.co/xfbai/AMRBART-large-finetuned-AMR3.0-AMRParsing-v2) | [output](https://1drv.ms/t/s!ArC7JSpdBblgsyuzmOH_0GMBr9m7?e=qtz2RD) |
 
 
 
